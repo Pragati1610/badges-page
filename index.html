@@ -8,6 +8,10 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <style>
+        body {
+            background-image: url("image.png");
+        }
+        
         input,
         div canvas,
         button {
@@ -63,26 +67,26 @@
     <input type="hidden" role="uploadcare-uploader" data-crop="1:1" data-images-only>
 
     <div class="cen" style="margin-bottom: 5vh;">
-        <img src="" alt="" id="preview" width=175 height=175 />
+        <img src="" alt="" id="preview" width=175 height=175 style="display: none;" />
     </div>
 
     <!-- Text -->
     <div class="ui transparent input cen" style="margin-bottom: 5vh">
-        <input type="text" class="cen" style="color: white;display: block;
-        margin-left: auto;
-        margin-right: auto;text-align: center;font-size: 20px;" placeholder="enter" spellcheck="false">
+        <input name="name" type="text" class="cen" id="texti" style="color: white;display: block;
+            margin-left: auto;
+            margin-right: auto;text-align: center;font-size: 20px;" placeholder="enter" spellcheck="false"></input>
     </div>
 
     <!-- Canvas -->
     <div>
         <canvas id="canvas">
         </canvas>
-        <canvas class="none" style="display: block;" height="175" width="175"></canvas>
     </div>
-
     <!-- Download button -->
     <button onclick="download_image()" class="ui secondary button" id="download" style="display: block;
     margin: 10vh auto;">Download your badge</button>
+
+
     <script>
         const widget = uploadcare.Widget('[role=uploadcare-uploader]');
         // Selecting an image to be replaced with the uploaded one.
@@ -93,13 +97,15 @@
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
 
-        var canvas2 = document.querySelector('.none');
-        var ctx2 = canvas.getContext('2d');
-        canvas2.width = 175;
-        canvas2.height = 175;
+        // ctx.globalCompositeOperation = 'destination-in';
+        var canvas2 = document.createElement('canvas');
+        canvas2.height = canvas2.width = 175
+
+        var ctx2 = canvas2.getContext('2d');
 
         function canvasFill(url, flag) {
             var img = new Image();
+            img.crossOrigin = 'anonymous';
             img.src = url;
             img.onload = function() {
                 fill_canvas(img, flag);
@@ -108,16 +114,15 @@
             function fill_canvas(img, flag) {
                 if (flag) {
                     ctx2.drawImage(img, 0, 0, 175, 175)
-
+                    ctx2.globalCompositeOperation = 'destination-in'
                     var cw = 175,
                         ch = 175;
-                    ctx2.drawImage(img, 0, 0, 175, 175);
-                    ctx2.globalCompositeOperation = 'destination-in';
                     ctx2.beginPath();
                     ctx2.arc(cw / 2, ch / 2, ch / 2, 0, Math.PI * 2);
                     ctx2.closePath();
                     ctx2.fill();
-                    ctx.drawImage(ctx2, 0, 0);
+
+                    ctx.drawImage(canvas2, 112, 105);
                     return;
                 }
                 canvas.width = img.width;
@@ -131,11 +136,16 @@
         widget.onUploadComplete(fileInfo => {
             preview.src = fileInfo.cdnUrl;
             preview.style.visibility = 'visible';
-            canvasFill(fileInfo.cdnUrl, true)
+            canvasFill(fileInfo.cdnUrl, true);
         });
 
         function download_image() {
-            var canvas = document.getElementById("canvas");
+            var text = document.getElementById('texti');
+            console.log(text.value);
+            ctx.font = "30px Ariel";
+            ctx.textAlign = "center";
+            ctx.fillStyle = 'white';
+            ctx.fillText(text.value, 200, 90);
             var image = canvas.toDataURL("image/png ").replace("image/png ", "image/octet-stream ");
             var link = document.createElement('a');
             link.download = "my-badge.png ";
