@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+body {
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+.container {
+    background-color: black;
+    border-radius: 20px;
+}
+
+#texti {
+    background-color: black;
+    color: white;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove 3px;
+    outline: none;
+}
+
+::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+.texti {
+    font-family: 'Poppins', sans-serif;
+}
