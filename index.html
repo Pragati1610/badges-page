@@ -27,12 +27,12 @@
     <div class="container w-75" style="margin: 20vh auto;">
         <div class="row">
 
-            <div class="col-md-4 col-sm-12 p-3 d-flex justify-content-center ">
+            <div class="col-lg-6 col-md-6 col-sm-12 p-3 d-flex justify-content-center flex-column ">
                 <!-- Canvas -->
                 <canvas id="canvas" class="img-fluid">
                 </canvas>
             </div>
-            <div class="col-md-3 col-sm-12 p-3 d-flex justify-content-center flex-column">
+            <div class="col-lg-6 col-md-6 col-sm-12 p-3 d-flex justify-content-center flex-column">
 
                 <h1 style="color: #0CD2F3;">YOUR SPACE TO SHOWCASE.</h1>
                 <br>
@@ -53,15 +53,12 @@
                 <br>
                 <br>
                 <div>
-                    <img src="" alt="" id="preview" width=175 height=175 style="display: none;" />
+                    <img src="" alt="" id="preview" width=175 height=175 class="fluid-img" style="display: none;" />
                 </div>
 
                 <!-- Download button -->
-                <button onclick="download_image()" class="btn btn-secondary" style="background-color: #0CD2F3 !important;color: white !important;font-size: 20px; font-weight: bold" id="download">Generate your badge here</button>
+                <button onclick="download_image()" class="btn btn-primary mb-3" style="background-color: #0CD2F3 !important;color: white !important;font-size: 20px; font-weight: bold" id="download">Generate your badge here</button>
 
-            </div>
-            <div class="col d-flex justify-content-center" style="margin-top: 17px;">
-                <img src="assets/logo1.png" width="300px" height="400" alt=" ">
             </div>
         </div>
     </div>

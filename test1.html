@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+    </style>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body style="background-color:#0CD2F3;">
+
+
+    <div class="container w-75" style="margin: 20vh auto;">
+        <div class="row">
+
+            <div class="col-lg-5 col-md-12 col-sm-12 p-3 d-flex justify-content-center flex-column">
+                <!-- Canvas -->
+                <canvas id="canvas" class="img-fluid">
+                </canvas>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-8 p-3 d-flex justify-content-center flex-column">
+
+                <h1 style="color: #0CD2F3;">YOUR SPACE TO SHOWCASE.</h1>
+                <br>
+
+                <!-- Text -->
+                <div>
+                    <input name="name" type="text" class="w-100" id="texti" placeholder="Enter your Name" spellcheck="false"></input>
+                </div>
+                <br>
+                <!-- Image -->
+                <script>
+                    UPLOADCARE_PUBLIC_KEY = "demopublickey";
+                </script>
+                <br>
+                <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
+
+                <input type="hidden" role="uploadcare-uploader" data-crop="1:1" data-images-only style="visibility: hidden">
+                <br>
+                <br>
+                <div>
+                    <img src="" alt="" id="preview" class="img-fluid" width=175 height=175 style="display: none;" />
+                </div>
+
+                <!-- Download button -->
+                <button onclick="download_image()" class="btn btn-secondary" style="background-color: #0CD2F3 !important;color: white !important;font-size: 20px; font-weight: bold" id="download">Generate your badge here</button>
+
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-4 d-flex justify-content-center flex-column" style="margin-top: 17px;">
+                <img src="assets/logo1.png" class = "img-fluid" width="300px" height="400" alt=" ">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+        // Selecting an image to be replaced with the uploaded one.
+        const preview = document.getElementById('preview');
+        // "onUploadComplete " lets you get file info once it has been uploaded.
+        // "cdnUrl " holds a URL of the uploaded file: to replace a preview with.
+
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // ctx.globalCompositeOperation = 'destination-in';
+        var canvas2 = document.createElement('canvas');
+        canvas2.height = canvas2.width = 175
+
+        var ctx2 = canvas2.getContext('2d');
+
+        function canvasFill(url, flag) {
+            var img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.src = url;
+            img.onload = function() {
+                fill_canvas(img, flag);
+            }
+
+            function fill_canvas(img, flag) {
+                if (flag) {
+                    ctx2.drawImage(img, 0, 0, 175, 175)
+                    ctx2.globalCompositeOperation = 'destination-in'
+                    var cw = 175,
+                        ch = 175;
+                    ctx2.beginPath();
+                    ctx2.arc(cw / 2, ch / 2, ch / 2, 0, Math.PI * 2);
+                    ctx2.closePath();
+                    ctx2.fill();
+
+                    ctx.drawImage(canvas2, 112, 105);
+                    return;
+                }
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            }
+        }
+
+        canvasFill('assets/400.png');
+
+        widget.onUploadComplete(fileInfo => {
+            preview.src = fileInfo.cdnUrl;
+            preview.style.visibility = 'visible';
+            canvasFill(fileInfo.cdnUrl, true);
+        });
+
+        function download_image() {
+            var text = document.getElementById('texti');
+            console.log(text.value);
+            ctx.font = "22px 'Poppins', sans-serif ";
+            ctx.textAlign = "center";
+            ctx.fillStyle = 'white';
+            ctx.fillText(text.value, 200, 90);
+            var image = canvas.toDataURL("image/png ").replace("image/png ", "image/octet-stream ");
+            var link = document.createElement('a');
+            link.download = "my-badge.png ";
+            link.href = image;
+            link.click();
+        }
+    </script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js " integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0 " crossorigin="anonymous "></script>
+</body>
+
+</html>
