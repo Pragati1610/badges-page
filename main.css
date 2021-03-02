@@ -23,6 +23,8 @@ body {
     border-left-style: hidden;
     border-bottom-style: groove 3px;
     outline: none;
+    height: 50px;
+    font-size: 1.5rem;
 }
 
 ::placeholder {

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="main.css">
 </head>
 
-<body style="background-color:#0CD2F3;">
+<body style="background-color:#00d5ff;">
 
 
     <div class="container w-75">
@@ -35,7 +35,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 p-3 d-flex justify-content-center flex-column">
 
-                <h1 style="color: #0CD2F3;">YOUR SPACE TO SHOWCASE.</h1>
+                <h1 style="color: #00d5ff;">YOUR SPACE TO SHOWCASE.</h1>
                 <br>
 
                 <!-- Text -->
@@ -58,7 +58,7 @@
                 </div>
 
                 <!-- Download button -->
-                <button onclick="download_image()" class="btn btn-primary my-3" style="background-color: #0CD2F3 !important;color: white !important;font-size: 20px; font-weight: bold" id="download">Generate your badge here</button>
+                <button onclick="download_image()" class="btn btn-primary my-3" style="background-color: #00d5ff !important;color: white !important;font-size: 20px; max-width: 200px; margin: auto" id="download">Generate Badge</button>
 
             </div>
         </div>
@@ -120,13 +120,13 @@
         function download_image() {
             var text = document.getElementById('texti');
             console.log(text.value);
-            ctx.font = "22px 'Poppins', sans-serif ";
+            ctx.font = "22px 'Poppins', sans-serif";
             ctx.textAlign = "center";
             ctx.fillStyle = 'white';
             ctx.fillText(text.value, 200, 90);
-            var image = canvas.toDataURL("image/png ").replace("image/png ", "image/octet-stream ");
+            var image = canvas.toDataURL("image/png ").replace("image/png", "image/octet-stream");
             var link = document.createElement('a');
-            link.download = "my-badge.png ";
+            link.download = "my-badge.png";
             link.href = image;
             link.click();
         }
