@@ -126,7 +126,7 @@
             ctx.fillText(text.value, 200, 90);
             var image = canvas.toDataURL("image/png ").replace("image/png ", "image/octet-stream ");
             var link = document.createElement('a');
-            link.download = "my-badge.png ";
+            link.download = "my-badge.png";
             link.href = image;
             link.click();
         }
